@@ -2,7 +2,10 @@ package com.rewards.service;
 
 
 import com.rewards.model.request.RewardRequest;
+import com.rewards.model.request.Transaction;
 import com.rewards.model.response.RewardResponse;
+import com.rewards.model.service.MonthlySum;
+import com.rewards.model.service.TransactionsByMonth;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,9 +16,13 @@ public class RewardCalcService {
 
     public RewardResponse calculateReward(RewardRequest rewardRequest) {
 
-        RewardResponse random = new RewardResponse();
+        List<Transaction> transactions = rewardRequest.getTransactionList();
+        TransactionsByMonth transactionsByMonth = new TransactionsByMonth();
 
-        return random;
+        transactions.forEach(transactionsByMonth::addTransaction);
+
+
+        return new RewardResponse();
 
     }
 
