@@ -1,7 +1,5 @@
 package com.rewards.web;
 
-import com.rewards.exception.CouldNotFindContent;
-import com.rewards.exception.CouldNotFindData;
 import com.rewards.model.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
