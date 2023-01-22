@@ -1,4 +1,4 @@
-package com.rewards.model;
+package com.rewards.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,16 +11,16 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-public class Response<T> {
+public class GeneralResponse<T> {
     private Boolean success;
     private List<String> errors;
     private T data;
 
 
 
-    public static ResponseEntity<Response<Object>> buildSuccessfulResponse (Object data) {
+    public static ResponseEntity<GeneralResponse<Object>> buildSuccessfulResponse (Object data) {
         return new ResponseEntity<>(
-                Response.builder()
+                GeneralResponse.builder()
                         .success(true)
                         .errors(null)
                         .data(data)
@@ -29,9 +29,9 @@ public class Response<T> {
         );
     }
 
-    public static ResponseEntity<Response<Object>> buildFailedResponse (List<Exception> errors) {
+    public static ResponseEntity<GeneralResponse<Object>> buildFailedResponse (List<Exception> errors) {
         return new ResponseEntity<>(
-                Response.builder()
+                GeneralResponse.builder()
                         .success(false)
                         .errors(errors.stream().map(Throwable::getMessage).toList())
                         .data(null)
@@ -40,9 +40,9 @@ public class Response<T> {
         );
     }
 
-    public static ResponseEntity<Response<Object>> buildFailedResponse (List<Exception> errors, HttpStatus status) {
+    public static ResponseEntity<GeneralResponse<Object>> buildFailedResponse (List<Exception> errors, HttpStatus status) {
         return new ResponseEntity<>(
-                Response.builder()
+                GeneralResponse.builder()
                         .success(false)
                         .errors(errors.stream().map(Throwable::getMessage).toList())
                         .data(null)
