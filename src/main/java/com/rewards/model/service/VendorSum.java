@@ -7,6 +7,10 @@ public class VendorSum {
         total_sum += amount;
     }
 
+    public void subValue(long amount) {total_sum -= amount; }
+
+    public Boolean isEqualOrGreaterThen(long amount) { return total_sum >= amount; }
+
     public VendorSum() {
         total_sum = 0;
     }

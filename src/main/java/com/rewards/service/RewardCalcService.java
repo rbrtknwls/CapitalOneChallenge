@@ -18,6 +18,8 @@ public class RewardCalcService {
 
         TransactionsByMonth transactionsByMonth = new TransactionsByMonth(rewardRequest.getTransactionList());
 
+        transactionsByMonth.calculate();
+
         return transactionsByMonth.toResponse();
 
     }

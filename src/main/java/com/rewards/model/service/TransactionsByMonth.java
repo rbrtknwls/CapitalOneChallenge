@@ -32,17 +32,20 @@ public class TransactionsByMonth {
 
 
 
+    public void calculate() {
+        RewardTiers rewardTier = new RewardTiers();
+        listOfTransactions.forEach((yearMonth, data) -> {
+            listOfTransactions.put(yearMonth, rewardTier.CalculateRewards(data));
+        });
+    }
+
+
     public RewardResponse toResponse() {
         List<RewardResponseData> rewardResponse = new ArrayList<>();
 
         listOfTransactions.forEach((yearMonth, data) ->
-                rewardResponse.add(RewardResponseData.builder()
-                        .Date(formatYearMonth(yearMonth))
-                        .totaltim(data.timHortons.total_sum)
-                        .totalsport(data.sportCheck.total_sum)
-                        .totaloth(data.other.total_sum)
-                        .totalsub(data.subway.total_sum)
-                .build()));
+                rewardResponse.add(data.toRuleData(formatYearMonth(yearMonth)))
+        );
 
         return RewardResponse.builder()
                              .rewardResponseData(rewardResponse)
