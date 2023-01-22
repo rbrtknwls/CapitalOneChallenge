@@ -16,13 +16,9 @@ public class RewardCalcService {
 
     public RewardResponse calculateReward(RewardRequest rewardRequest) {
 
-        List<Transaction> transactions = rewardRequest.getTransactionList();
-        TransactionsByMonth transactionsByMonth = new TransactionsByMonth();
+        TransactionsByMonth transactionsByMonth = new TransactionsByMonth(rewardRequest.getTransactionList());
 
-        transactions.forEach(transactionsByMonth::addTransaction);
-
-
-        return new RewardResponse();
+        return transactionsByMonth.toResponse();
 
     }
 

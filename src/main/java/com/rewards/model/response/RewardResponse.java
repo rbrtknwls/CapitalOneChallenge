@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
-public class RewardResponse {
-    int x;
+import java.util.List;
 
-    public RewardResponse() {
-        x = 2;
-    }
+@Data
+@Builder
+public class RewardResponse {
+    List<RewardResponseData> rewardResponseData;
 }
