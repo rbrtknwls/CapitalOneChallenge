@@ -10,4 +10,5 @@ import java.util.List;
 @Builder
 public class RewardResponse {
     List<RewardResponseData> rewardResponseData;
+    long totalPoints;
 }

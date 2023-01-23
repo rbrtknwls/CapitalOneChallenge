@@ -2,18 +2,21 @@ package com.rewards.model.service;
 
 import com.rewards.model.request.Transaction;
 import com.rewards.model.response.RewardResponseData;
-import org.apache.tomcat.util.digester.Rule;
+import com.rewards.model.service.calc.RewardTotals;
+import com.rewards.model.service.calc.Rules;
+import com.rewards.model.service.vendor.VendorSum;
+import com.rewards.model.service.vendor.VendorType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonthlySum {
+public class MonthlySum implements Cloneable{
     VendorSum sportCheck;
     VendorSum timHortons;
     VendorSum subway;
     VendorSum other;
 
-    long pointTotal;
+    public long pointTotal;
     List<Rules> rulesList;
 
     public void addTransaction(Transaction transaction) {
@@ -39,13 +42,7 @@ public class MonthlySum {
     }
 
     public MonthlySum(MonthlySum monthlySum) {
-        sportCheck = monthlySum.sportCheck;
-        timHortons = monthlySum.timHortons;
-        subway = monthlySum.subway;
-        other = monthlySum.other;
 
-        pointTotal = monthlySum.pointTotal;
-        rulesList = monthlySum.rulesList;
     }
 
 
@@ -63,7 +60,8 @@ public class MonthlySum {
         if (rules == Rules.Rule7) {
             return applyRule7();
         } else {
-            MonthlySum newMonthlySum = new MonthlySum(this);
+            MonthlySum newMonthlySum = this.clone();
+
 
             newMonthlySum.sportCheck.subValue(rules.sportCost);
             newMonthlySum.timHortons.subValue(rules.timCost);
@@ -77,10 +75,13 @@ public class MonthlySum {
     }
 
     public MonthlySum applyRule7() {
-        MonthlySum newMonthlySum = new MonthlySum(this);
+        MonthlySum newMonthlySum = this.clone();
 
-        long total_points = (long) Math.floor((sportCheck.total_sum + timHortons.total_sum +
-                            subway.total_sum + other.total_sum)/1000.0f);
+
+        long total_points = (long) (Math.floor((sportCheck.total_sum)/100.0f) +
+                            Math.floor((timHortons.total_sum)/100.0f) +
+                            Math.floor((subway.total_sum)/100.0f) +
+                            Math.floor((other.total_sum)/100.0f));
 
         newMonthlySum.sportCheck.subValue(sportCheck.total_sum);
         newMonthlySum.timHortons.subValue(timHortons.total_sum);
@@ -96,9 +97,8 @@ public class MonthlySum {
         return newMonthlySum;
     }
 
-    public RewardResponseData toRuleData(String date) {
-        RewardResponseData responseData = RewardResponseData.builder()
-                .Date(date)
+    public RewardTotals toRuleData() {
+        RewardTotals responseData = RewardTotals.builder()
                 .rule1Count(0)
                 .rule2Count(0)
                 .rule3Count(0)
@@ -127,6 +127,29 @@ public class MonthlySum {
             }
         });
         return responseData;
+    }
+
+    public MonthlySum clone()
+    {
+        MonthlySum newMonthlySum;
+        try {
+            newMonthlySum = (MonthlySum) super.clone();
+        } catch (CloneNotSupportedException exception) {
+            newMonthlySum = new MonthlySum(this);
+        }
+
+        newMonthlySum.sportCheck = (VendorSum) sportCheck.clone();
+        newMonthlySum.timHortons = (VendorSum) timHortons.clone();
+        newMonthlySum.subway = (VendorSum) subway.clone();
+        newMonthlySum.other = (VendorSum) other.clone();
+
+        newMonthlySum.pointTotal = pointTotal;
+
+        List<Rules> newListOfRules = new ArrayList<>();
+        newListOfRules.addAll(rulesList);
+        newMonthlySum.rulesList = newListOfRules;
+
+        return newMonthlySum;
     }
 
 

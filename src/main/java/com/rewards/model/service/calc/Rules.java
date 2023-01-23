@@ -1,18 +1,18 @@
-package com.rewards.model.service;
+package com.rewards.model.service.calc;
 
 public enum Rules {
-    Rule1(75000, 25000, 25000, 500),
-    Rule2(75000, 25000, 0, 300),
-    Rule3(75000, 0, 0, 200),
-    Rule4(25000, 10000, 10000, 150),
-    Rule5(25000, 10000, 0, 75),
-    Rule6(20000, 0, 0, 75),
+    Rule1(7500, 2500, 2500, 500),
+    Rule2(7500, 2500, 0, 300),
+    Rule3(7500, 0, 0, 200),
+    Rule4(2500, 1000, 1000, 150),
+    Rule5(2500, 1000, 0, 75),
+    Rule6(2000, 0, 0, 75),
     Rule7(0, 0, 0, 0);
 
-    final long sportCost;
-    final long subCost;
-    final long timCost;
-    long pointVal;
+    public final long sportCost;
+    public final long subCost;
+    public final long timCost;
+    public long pointVal;
 
     Rules(long sportCost, long subCost, long timCost, long pointVal) {
         this.sportCost = sportCost;

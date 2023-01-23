@@ -1,13 +1,14 @@
-package com.rewards.model.service;
+package com.rewards.model.service.calc;
+
+import com.rewards.model.service.MonthlySum;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class RewardTiers {
 
-    Stream<Rules> allContRules = Stream.of(Rules.Rule1, Rules.Rule2, Rules.Rule3,
-                                           Rules.Rule4, Rules.Rule5, Rules.Rule6);
+    List<Rules> allContRules = List.of(Rules.Rule1, Rules.Rule2, Rules.Rule3,
+                                       Rules.Rule4, Rules.Rule5, Rules.Rule6);
     public MonthlySum CalculateRewards(MonthlySum monthlySum) {
         List<MonthlySum> possibleResults = new ArrayList<>();
 
@@ -27,11 +28,15 @@ public class RewardTiers {
         }
 
         // Calculate point max if we used the other rules
-        Stream<MonthlySum> rewardPossibilities = possibleResults.stream()
-                                                                .map(this::CalculateRewards);
+        List<MonthlySum> rewardPossibilities = new ArrayList<>();
+
+        possibleResults.forEach(nMonthSum ->
+                rewardPossibilities.add(CalculateRewards(nMonthSum)));
+
+        int x = 1 + 2;
 
         // Return the maximum point total
-        return rewardPossibilities.reduce(convertAllToPoints, (acc, newVal) -> {
+        return rewardPossibilities.stream().reduce(convertAllToPoints, (acc, newVal) -> {
             if (acc.pointTotal < newVal.pointTotal) {
                 return newVal;
             } else {

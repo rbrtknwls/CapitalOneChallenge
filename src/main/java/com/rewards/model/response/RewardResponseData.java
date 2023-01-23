@@ -7,13 +7,14 @@ import lombok.Data;
 @Builder
 public class RewardResponseData {
     String Date;
-    int rule1Count;
-    int rule2Count;
-    int rule3Count;
-    int rule4Count;
-    int rule5Count;
-    int rule6Count;
-    int rule7Count;
+    int T1;
+    int T2;
+    int T3;
+    int T4;
+    int T5;
+    int T6;
+    int T7;
+    int Total;
 
 
 }

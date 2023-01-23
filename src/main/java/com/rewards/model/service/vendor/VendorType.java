@@ -1,6 +1,4 @@
-package com.rewards.model.service;
-
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
+package com.rewards.model.service.vendor;
 
 public enum VendorType {
     SportsCheck, TimHortons, Subway, Other;

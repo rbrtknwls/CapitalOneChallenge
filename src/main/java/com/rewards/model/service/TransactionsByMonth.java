@@ -3,8 +3,8 @@ package com.rewards.model.service;
 import com.rewards.model.request.Transaction;
 import com.rewards.model.response.RewardResponse;
 import com.rewards.model.response.RewardResponseData;
+import com.rewards.model.service.calc.RewardTiers;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +44,7 @@ public class TransactionsByMonth {
         List<RewardResponseData> rewardResponse = new ArrayList<>();
 
         listOfTransactions.forEach((yearMonth, data) ->
-                rewardResponse.add(data.toRuleData(formatYearMonth(yearMonth)))
+                rewardResponse.add(data.toRuleData().toResponseData(formatYearMonth(yearMonth)))
         );
 
         return RewardResponse.builder()
