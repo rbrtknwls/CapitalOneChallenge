@@ -33,8 +33,7 @@ public class RewardTiers {
         possibleResults.forEach(nMonthSum ->
                 rewardPossibilities.add(CalculateRewards(nMonthSum)));
 
-        int x = 1 + 2;
-
+        var x = 1;
         // Return the maximum point total
         return rewardPossibilities.stream().reduce(convertAllToPoints, (acc, newVal) -> {
             if (acc.pointTotal < newVal.pointTotal) {
